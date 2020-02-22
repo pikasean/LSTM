@@ -25,10 +25,10 @@ We have cerafully analysed the rationale behind using LSTM for the prediction of
 
 ### contributers
 
-'''python
+```python
 Zhou Zijian
-'''
+```
 
-'''python
+```python
 Sean Gee
-'''
+```
