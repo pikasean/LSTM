@@ -37,7 +37,7 @@ then
         jupyter notebook ./Neural_Networks_Model/LSTM_Template.ipynb
     else
         echo "Classifiers chosen, starting jupyter notebook"
-        jupyter notebook ./Classifiers_Model/Classifiers_GBPUSD.ipynb
+        jupyter notebook ./Classifiers_Model/Classifiers_Template.ipynb
     fi
 else
     echo error handling data preparation
