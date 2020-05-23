@@ -4,6 +4,4 @@
 .DS_Store
 
 # jupyter notebook checkpoints
-.ipynb_checkpoints/
-./Classifiers_Model/.ipynb_checkpoints/
-./Neural_Networks_Model/.ipy:nb_checkpoints/
+**/.ipynb_checkpoints/
