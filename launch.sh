@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "Ensure you have install python3, pandas, numpy, ta and scipy [y/n]"
+echo "Ensure you have install python3, jupyter notebook, pandas, numpy, ta and scipy [y/n]"
 
 read confirm
 
@@ -27,8 +27,18 @@ fi
 
 if [ $? -eq 0 ] 
 then
-    echo "data successfully prepared, starting jupyter notebook"
-    jupyter notebook ./Neural_Networks_Model/LSTM_Template.ipynb
+    echo "data successfully prepared,"
+    echo "which model do you want to refer to? : [LSTM/Classifiers]"
+    read ans
+    ans=$(echo $ans | tr '[:upper:]' '[:lower:]')
+    if [ ans == LSTM ]
+    then
+        echo "LSTM chosen, starting jupyter notebook"
+        jupyter notebook ./Neural_Networks_Model/LSTM_Template.ipynb
+    else
+        echo "Classifiers chosen, starting jupyter notebook"
+        jupyter notebook ./Classifiers_Model/Classifiers_GBPUSD.ipynb
+    fi
 else
     echo error handling data preparation
 fi
