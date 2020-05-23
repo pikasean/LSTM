@@ -31,7 +31,7 @@ then
     echo "which model do you want to refer to? : [LSTM/Classifiers]"
     read ans
     ans=$(echo $ans | tr '[:upper:]' '[:lower:]')
-    if [ ans == LSTM ]
+    if [ ans == lstm ]
     then
         echo "LSTM chosen, starting jupyter notebook"
         jupyter notebook ./Neural_Networks_Model/LSTM_Template.ipynb
