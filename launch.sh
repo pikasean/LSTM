@@ -1,7 +1,5 @@
 #!/bin/bash
-echo Ensure you have install python3, jupyter notebook, pandas, numpy, ta and scipy [y/n]
-
-read chk
+read -p "Ensure you have install python3, jupyter notebook, pandas, numpy, ta and scipy [y/n]: " chk
 
 chk=$( echo $chk | tr '[:upper:]' '[:lower:]' )
  
@@ -11,34 +9,55 @@ then
     exit 1
 fi
 
-echo "enter the currency pair in the format (EURUSD): "
-read currency
+read -p "enter the currency pair in the format (EURUSD): " currency
 
-echo determining python3 path
-which python3
+for name in `find ./Dataframes -type f -exec basename {} \;`
+    do
+        basename=${name%%.*}
+        if [[ df_$currency = $basename ]]
+            then
+            read -p "existing forex pair df detected, skip preparation?[y/n]:" skip
+        fi
+done
 
-if [ $? -eq 0 ]
-then
-    python3 ./DataPreparation.py $currency
-else
-    echo python3 not detected. using python instead
-    python ./DataPreparation.py $currency
+skip=$( echo $skip | tr '[:upper:]' '[:lower:]' )
+
+
+prep() {
+    echo determining python3 path
+    which python3
+
+    if [ $? -eq 0 ]
+    then
+        python3 ./DataPreparation.py $currency
+    else
+        echo python3 not detected. using python instead
+        python ./DataPreparation.py $currency
+    fi
+
+    if [ $? -eq 0 ]
+        then echo data successfully prepared
+    else
+        echo error handling data preparation
+    fi
+}
+
+if [[ $skip != "yes" && $skip != "y" ]]
+then  prep
 fi
 
-if [ $? -eq 0 ] 
-then
-    echo data successfully prepared,
-    echo which model do you want to refer to? : [LSTM/Classifiers]
-    read ans
+    read -p "which model do you want to refer to? [LSTM/Classifiers]: " ans
     ans=$(echo $ans | tr '[:upper:]' '[:lower:]')
     if [ $ans = 'lstm' ]
     then
         echo LSTM chosen, starting jupyter notebook
-        jupyter notebook ./Neural_Networks_Model/LSTM_Template.ipynb
+        jupyter notebook --no-browser --port 8888 ./Neural_Networks_Model/LSTM_Template.ipynb
     else
         echo Classifiers chosen, starting jupyter notebook
-        jupyter notebook ./Classifiers_Model/Classifiers_Template.ipynb
+        jupyter notebook --no-browser --port 8888 ./Classifiers_Model/Classifiers_Template.ipynb
     fi
-else
-    echo error handling data preparation
-fi
+
+    if [ $? -eq 0 ]
+       then echo successfully launed jupyter notebook\nnavigate to \
+            localhost:8888 in browser to have a look 
+    fi
